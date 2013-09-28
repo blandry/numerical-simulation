@@ -3,19 +3,18 @@ function [ A ] = D2Grid( dx )
 %   Detailed explanation goes here
 
 m = floor(1/dx);
-Rfinal = [];
-
-for k = 1:m
-    if (k==m)
-        Rh = zeros(3,m-1);
-        Rh(1,:) = ones(1,m-1);
-        Rh(2,:) = [0:m-2]+k*m;
-        Rh(3,:) = [1:m-1]+k*m;
-    else
-        Rv
+R = [];
+for j=1:m
+    for i=1:m
+        n = (j-1)*m+(i-1);
+        if (i~=m)
+            R = [R,[1;n;n+1]];
+        end
+        if (j~=m)
+            R = [R,[1;n;n+m]];
+        end
     end
 end
-
 A = generateNodalG(R);
 
 end

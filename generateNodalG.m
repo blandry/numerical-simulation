@@ -2,12 +2,13 @@ function [ G ] = generateNodalG( R )
 %GENERATENODALG Summary of this function goes here
 %   Detailed explanation goes here
 
+[~,nR] = size(R);
 nNodes = max(max(R(2:3,:)));    
-G = zeros(nNodes);
-for nodei = 1:nNodes
-    r = R(1,nodei);
-    ni = R(2,nodei);
-    nj = R(3,nodei);
+G = sparse(nNodes,nNodes);
+for ri = 1:nR
+    r = R(1,ri);
+    ni = R(2,ri);
+    nj = R(3,ri);
     if (ni>0 && nj>0)
         G(ni,nj) = G(ni,ni)+1/r;
         G(ni,nj) = G(ni,nj)-1/r;
