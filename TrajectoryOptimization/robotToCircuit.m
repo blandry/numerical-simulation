@@ -1,4 +1,4 @@
-function [ R, Isource ] = robotToCircuit( )
+function [ R, Isource, nodes, goalnode ] = robotToCircuit( )
 %ROBOTTOCIRCUIT Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,7 @@ ew = 5; % the weight attributed to energy cost
 tw = 15; % the weight attributed to time cost
 
 a = [-0.25;0;0.25]; % the different accelerations possible for the robot
-dt = 0.05; % the time between each time step
+dt = 0.5; % the time between each time step
 x0 = [0;0]; % the initial state of the robot
 t0 = 0; % the initial time
 tf = 1; % the final time
@@ -18,7 +18,7 @@ nodes = x0; % all the nodes in the network
 t = t0;
 while (t<tf)
     t = t + dt;
-    [mterminalnodes, nterminalnodes] = size(terminalnodes);
+    [~, nterminalnodes] = size(terminalnodes);
     newterminalnodes = []; % terminal nodes generated in this timestep
     for i = 1:nterminalnodes
         ax = terminalnodes(:,i);
@@ -37,7 +37,10 @@ while (t<tf)
             end
             % now adding the edge
             r = ew*a(j) + tw;
-            R = [R,[r;axnodei;bxnodei]];
+            newR = [r;axnodei;bxnodei];
+            if (length(R)==0 || isempty(find(ismember(R',newR','rows'))))
+                R = [R,newR];
+            end
         end
     end
     terminalnodes = newterminalnodes;
@@ -45,15 +48,14 @@ end
 
 % modelling collision could be done here by adding some edges
 
-% now adding a current source at the starting point
-Isource = [100;0;1];
-
-% finally adding the ground at the goal location
+% now adding a current source at the goal node
 % for now the goal location is always the last node
 [~, goalnodei] = size(nodes);
-display('Your goal node is:');
-display(nodes(:,goalnodei));
-R = [R,[tw;goalnodei;0]];
+goalnode = nodes(:,goalnodei);
+Isource = [100000;0;goalnodei];
+
+% finally adding the ground at the start location
+R = [[tw;0;1],R];
             
 end
 

@@ -1,4 +1,4 @@
-function [ G ] = generateNodalG( R )
+function [ G, Is ] = generateNodalG( R, Isource )
 %GENERATENODALG Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -21,5 +21,19 @@ for ri = 1:nR
     end
 end
 
+if (nargout>1)
+    Is = zeros(nNodes, 1);
+    [~,nIsource] = size(Isource);
+    for i = 1:nIsource
+        source = Isource(:, i);
+        if source(2) ~= 0
+            Is(source(2), 1) = Is(source(2), 1) - source(1);
+        end
+        if source(3) ~= 0
+            Is(source(3), 1) = Is(source(3), 1) + source(1);
+        end  
+    end
+end
+    
 end
 
