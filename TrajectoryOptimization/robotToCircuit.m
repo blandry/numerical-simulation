@@ -1,4 +1,4 @@
-function [ R, Isource, nodes, goalnode ] = robotToCircuit( )
+function [ R, Isource, nodes, goalnode ] = robotToCircuit( dt )
 %ROBOTTOCIRCUIT Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,9 @@ ew = 5; % the weight attributed to energy cost
 tw = 15; % the weight attributed to time cost
 
 a = [-0.25;0;0.25]; % the different accelerations possible for the robot
-dt = 0.5; % the time between each time step
+if (nargin<1)
+    dt = 0.25; % the time between each time step
+end
 x0 = [0;0]; % the initial state of the robot
 t0 = 0; % the initial time
 tf = 1; % the final time
