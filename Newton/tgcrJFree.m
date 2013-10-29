@@ -14,7 +14,7 @@ tol = 0.1;
 maxiters = 500;
 epsilon = 1e-3;
 
-% Generate the initial guess for x (zero)
+% Generate the initial guess for x
 x = zeros(size(b));
 
 % Set the initial residual to b - Mx^0 = b
@@ -27,12 +27,11 @@ r_norms(1) = norm(r,2);
 p = zeros(length(b),maxiters);
 Mp = p;
 
-tic
 for iter = 1:maxiters
 % Use the residual as the first guess for the new
 % search direction and multiply by M
   p(:,iter) = r; 
-  Mp(:, iter) = (F(xk+epsilon*p(:,iter))-F(xk))/epsilon;
+  Mp(:, iter) = (1/epsilon)*(F(xk+epsilon*r)-F(xk));
   
 % Make the new Mp vector orthogonal to the previous Mp vectors,
 % and the p vectors M^TM orthogonal to the previous p vectors
@@ -64,7 +63,6 @@ for iter = 1:maxiters
 
 % Check convergence.
   if r_norms(iter+1) < (tol * r_norms(1))
-    toc
     break; 
   end; 
 end;

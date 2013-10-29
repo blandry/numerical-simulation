@@ -21,7 +21,7 @@ for i=1:N
         J(i,i-1)=-1;
     end
     if i~=N
-        J(i,i+1)=1;
+        J(i,i+1)=-1;
     end
 end
 

@@ -22,8 +22,8 @@ if (size(varargin,2)>1)
 else
     tolf=1e-12;
 end
-tolx=0.001;
-tolr=0.001;
+tolx=1e-12;
+tolr=1e-12;
 if (size(varargin,2)>1)
     maxIters = varargin{2};
 else
@@ -35,13 +35,6 @@ x00=x0;             % initial guess
 for iter=1:maxIters
     [f J]=fhand(x0);            % evaluate function
     dx=-f/J;                    % solve linear system
-    if dx<0                     % damping
-        dx = max(-50,dx);
-    elseif dx>0
-        dx = min(50,dx);
-    else
-        dx = 0;
-    end
     nf(iter)=abs(f);            % norm of f at step k+1
     ndx(iter)=abs(dx);          % norm of dx at step k+1
     x(iter)=x0+dx;              % solution x at step k+1
