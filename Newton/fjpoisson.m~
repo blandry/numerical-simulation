@@ -1,0 +1,22 @@
+function [ F J ] = fjpoisson( x )
+%FJPOISSON Summary of this function goes here
+%   Detailed explanation goes here
+
+N = size(x,1); % size of the grid
+dx = 1/(N+1);
+
+V = 10; % voltage at each end
+
+F = zeros(N,1);
+F(1,1) = 2*x(1)-x(2)-(-V)+dx^2*(exp(x(1))-exp(-x(1)));
+for i=2:N-1
+   F(i,1) = 2*x(i)-x(i+1)-x(i-1)+dx^2*(exp(x(i))-exp(-x(i))); 
+end
+F(N,1) = 2*x(N)-x(N-1)-V+dx^2*(exp(x(N))-exp(-x(N)));
+
+J = zeros(N);
+for i=1:N
+    J(i,i)=2+dx^2*(exp(
+
+end
+
