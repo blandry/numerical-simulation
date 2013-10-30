@@ -1,4 +1,4 @@
-function [x0,convergence] = newtonNdGCR(fhand,x0,varargin)
+function [x0,convergence,nf] = newtonNdGCR(fhand,x0,varargin)
 % function newtonNd(fhand,x0,itpause)
 % 
 % INPUTS:
