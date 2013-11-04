@@ -19,7 +19,11 @@ end
 
 tolf=1e-10;
 tolx=1e-8;
-maxIters=500000;       % max # of iterations
+if (size(varargin,2)>1)
+    maxIters = varargin{1};
+else
+    maxIters=500000;       % max # of iterations
+end
 
 x00=x0;             % initial guess
 
