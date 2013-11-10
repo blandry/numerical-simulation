@@ -1,0 +1,31 @@
+function [ x ] = traprule( f, df, u, x00, tf, dt )
+%TRAPRULE Summary of this function goes here
+%   Detailed explanation goes here
+
+x = x00;
+t = 0;
+while t<tf
+    % Newton loop
+    maxIters=500;
+    x0=x(:,end);
+    gamma=x(:,end)+(dt/2)*f(x(:,end),u(:,size(x,2)));
+    for iter=1:maxIters
+        J=eye(size(x0))-(dt/2)*df(x0,u(:,size(x,2)+1));
+        nF=-(x0-(dt/2)*f(x0,u(size(x,2)+1)
+        dx=J\(-f);                  % solve linear system
+        nf(iter)=norm(f);           % norm of f at step k+1
+        ndx(iter)=norm(dx);         % norm of dx at step k+1
+        x(:,iter)=x0+dx;            % solution x at step k+1
+        x0=x(:,iter);               % set value for next guess
+        if (nf(iter)<tolf && ndx(iter)<tolx)
+            % check for convergence
+            fprintf('Newton converged in %d iterations\n',iter);
+            break;
+    end
+    end
+    
+    x = [x,xt];
+    t = t + dt;
+end
+
+end
