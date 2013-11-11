@@ -4,7 +4,7 @@ function [ x ] = traprule( f, df, u, x00, tf, dt )
 
 x = x00;
 t = 0;
-while t<tf
+while t<(tf-dt+1e-12)
     % Newton loop
     maxIters=500;
     tolf=1e-10;
