@@ -17,7 +17,6 @@ while t<tf
         dx=J\(-F);                  % solve linear system
         nf=norm(F);           % norm of f at step k+1
         ndx=norm(dx);         % norm of dx at step k+1
-        x0=x0+dx;               % set value for next guess
         if (nf<tolf && ndx<tolx)
             % check for convergence
             break;
@@ -25,6 +24,7 @@ while t<tf
         if iter==maxIters
             error('Newton non-convergence');
         end
+        x0=x0+dx;               % set value for next guess
     end
     x = [x,x0];
     t = t + dt;
